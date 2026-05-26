@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JCN Printing | Fidgets & Tech</title>
+    <style>
+        body { font-family: sans-serif; margin: 0; background: #f8f9fa; color: #333; }
+        header { background: #333; color: white; padding: 20px; text-align: center; }
+        
+        /* New Navigation Bar Styling */
+        .nav-bar { background: #222; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-bar a { color: #fff; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        .nav-bar .printer-link { background: #00d2ff; color: #121214; padding: 6px 12px; border-radius: 4px; transition: 0.2s; }
+        .nav-bar .printer-link:hover { background: #ffffff; }
+
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        .machine-list { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+        .machine-tag { background: #e0e0e0; padding: 5px 15px; border-radius: 5px; font-size: 0.9rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .product-card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        .multi-color { border-top: 5px solid purple; }
+        .btn { background: #2ecc71; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn:hover { background: #27ae60; }
+    </style>
+</head>
+<body>
+
+    <!-- Main Header -->
+    <header>
+        <h1>JCN 3D Printing</h1>
+        <p>Flashforge AD5X | Anycubic Kobra S1</p>
+    </header>
+
+    <!-- New Navigation Submenu -->
+    <div class="nav-bar">
+        <a href="https://jcn-uk.com">&larr; Main JCN Gateway</a>
+        <a href="./printers/" class="printer-link">View Our Print Fleet &rarr;</a>
+    </div>
+
+    <div class="container">
+        <center>
+            <p><strong>Official Hive Authorized Seller</strong></p>
+            <div class="machine-list">
+                <span class="machine-tag">Multi-Color Prints</span>
+                <span class="machine-tag">Fast UK Shipping</span>
+                <span class="machine-tag">Custom Commissions</span>
+            </div>
+        </center>
+
+        <div class="grid" id="productGrid">
+            <!-- JavaScript dynamically injects items here -->
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { name: "Articulated Dragon", type: "Multi-Color", price: "£15" },
+            { name: "Fidget Spinner Pro", type: "Single Color", price: "£5" },
+            { name: "Custom Name Sign", type: "Multi-Color", price: "£10" }
+        ];
+
+        const grid = document.getElementById('productGrid');
+        products.forEach(p => {
+            grid.innerHTML += `
+                <div class="product-card ${p.type === 'Multi-Color' ? 'multi-color' : ''}">
+                    <h3>${p.name}</h3>
+                    <p>${p.type}</p>
+                    <p><strong>${p.price}</strong></p>
+                    <button class="btn" onclick="alert('Contact us to order!')">Order Now</button>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
