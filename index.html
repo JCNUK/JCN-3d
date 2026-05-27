@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JCN Printing | Fidgets & Tech</title>
     <style>
-        /* Modern Variables for Easy Theme Tweaking */
+        /* Modern Variables with Default Light Mode */
         :root {
             --primary: #6366f1;
             --secondary: #a855f7;
@@ -13,14 +13,33 @@
             --dark: #1e293b;
             --bg: #fdfeff;
             --card-bg: #ffffff;
+            --text-main: #111827;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --tag-bg: #f1f5f9;
+            --navbar-bg: rgba(255, 255, 255, 0.8);
+            --notice-bg: linear-gradient(to right, #e0e7ff, #e0e7ff);
+        }
+
+        /* Dark Mode Override variables */
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --tag-bg: #334155;
+            --navbar-bg: rgba(15, 23, 42, 0.8);
+            --notice-bg: linear-gradient(to right, #1e1b4b, #1e1b4b);
         }
 
         body { 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             margin: 0; 
             background: var(--bg); 
-            color: var(--dark); 
+            color: var(--text-main); 
             line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         /* Fun Gradient Header */
@@ -29,14 +48,39 @@
             color: white; 
             padding: 40px 20px; 
             text-align: center; 
-            clip-path: ellipse(150% 100% at 50% 0%); /* Subtle curve for flair */
+            clip-path: ellipse(150% 100% at 50% 0%);
+            position: relative;
         }
 
         header h1 { margin: 0; font-size: 2.5rem; letter-spacing: -1px; }
 
+        /* Modern Floating Theme Toggle Button */
+        .theme-toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s ease;
+        }
+        .theme-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.03);
+        }
+
         /* Navigation */
         .nav-bar { 
-            background: rgba(255, 255, 255, 0.8);
+            background: var(--navbar-bg);
             backdrop-filter: blur(10px);
             padding: 15px 30px; 
             display: flex; 
@@ -46,9 +90,10 @@
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: background 0.3s ease;
         }
 
-        .nav-bar a { color: var(--dark); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+        .nav-bar a { color: var(--text-main); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
         .printer-link { 
             background: var(--primary); 
             color: white !important; 
@@ -63,12 +108,14 @@
         /* Tags Section */
         .machine-list { display: flex; gap: 12px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
         .machine-tag { 
-            background: #f1f5f9; 
+            background: var(--tag-bg); 
+            color: var(--text-main);
             padding: 6px 20px; 
             border-radius: 20px; 
             font-size: 0.85rem; 
             font-weight: 600; 
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-color);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         /* Live Events Tracker (Bento Style) */
@@ -76,21 +123,22 @@
             background: var(--card-bg); 
             padding: 30px; 
             border-radius: 24px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02); 
             margin-bottom: 50px; 
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-color);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
         .event-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 20px; }
         .event-card { 
-            background: #f1f5f9; 
+            background: var(--tag-bg); 
             padding: 20px; 
             border-radius: 16px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            transition: 0.2s;
+            transition: 0.2s ease;
         }
-        .event-card:hover { background: #e2e8f0; }
+        .event-card:hover { transform: scale(1.01); }
         .event-date { 
             background: var(--primary); 
             color: white; 
@@ -111,36 +159,39 @@
 
         /* Modern Product Card */
         .product-card { 
-            background: white; 
+            background: var(--card-bg); 
             padding: 25px; 
             border-radius: 20px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02); 
             text-align: center; 
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 1px solid #e2e8f0;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, border-color 0.3s ease; 
+            border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 35px rgba(0,0,0,0.07); }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 35px rgba(0,0,0,0.05); }
 
-        .product-card h3 { margin-top: 10px; margin-bottom: 5px; font-size: 1.4rem; color: #111827; }
+        .product-card h3 { margin-top: 10px; margin-bottom: 5px; font-size: 1.4rem; color: var(--text-main); }
         
         .badge {
             font-size: 0.75rem;
             text-transform: uppercase;
             padding: 4px 12px;
             border-radius: 50px;
-            background: #f1f5f9;
+            background: var(--tag-bg);
+            color: var(--text-main);
             font-weight: 700;
             display: inline-block;
             align-self: center;
         }
         .multi-color-badge { background: #fae8ff; color: #a855f7; border: 1px solid #f0abfc; }
+        /* Keep multi-color visibility vibrant in dark mode too */
+        [data-theme="dark"] .multi-color-badge { background: #4a148c; color: #f3e5f5; border: 1px solid #7b1fa2; }
 
         .price-notice {
             font-size: 0.85rem;
-            color: #64748b;
+            color: var(--text-muted);
             font-style: italic;
             margin: 15px 0;
             display: block;
@@ -163,13 +214,14 @@
 
         /* Notice Box */
         .notice-box { 
-            background: linear-gradient(to right, #e0e7ff, #e0e7ff); 
+            background: var(--notice-bg); 
             border: 2px dashed var(--primary); 
             padding: 25px; 
             border-radius: 20px; 
             text-align: center; 
             margin-top: 50px; 
             font-weight: 600; 
+            transition: background 0.3s ease;
         }
 
         @media (max-width: 600px) {
@@ -180,6 +232,10 @@
 <body>
 
     <header>
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+            <span>🌙</span> Dark Mode
+        </button>
         <h1>JCN 3D Printing</h1>
         <p>Speedy & High-Quality Fidgets, Gear, and Custom Tech</p>
     </header>
@@ -196,7 +252,7 @@
             <h2>📍 Find Us & Browse Our Prints In Person!</h2>
             <p>Our printing prices vary depending on the event, venue, and customized sizing options. Catch us at our upcoming locations to check out our physical stock or talk commissions!</p>
             <div class="event-grid" id="eventGrid">
-                <!-- JS will inject the exact same events here -->
+                <!-- JS will inject events here -->
             </div>
         </div>
 
@@ -221,13 +277,36 @@
     </div>
 
     <script>
-        // --- EASY TO EDIT EVENTS (MATCHED TO COLLECTIBLES) ---
+        // --- THEME CONFIGURATION ---
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme');
+
+        // Apply saved theme state immediately
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<span>☀️</span> Light Mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<span>🌙</span> Dark Mode';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<span>☀️</span> Light Mode';
+            }
+        });
+
+        // --- EASY TO EDIT EVENTS ---
         const events = [
             { name: "Kent Card Vault", location: "Brompton Academy, Gillingham", date: "29th Aug 2025" },
             { name: "Greenfield’s Boot Fair", location: "Anthony's Way, Wainscott", date: "Most Sundays" }
         ];
 
-        // --- EASY TO EDIT PRODUCTS (NO PRICES) ---
+        // --- EASY TO EDIT PRODUCTS ---
         const products = [
             { name: "Infinity Cube", type: "Fidget", isMulti: true },
             { name: "Articulated Dragon", type: "Decor", isMulti: true },
@@ -241,7 +320,7 @@
             <div class="event-card">
                 <div>
                     <strong style="font-size: 1.1rem; display: block;">${e.name}</strong>
-                    <span style="color: #64748b; font-size: 0.9rem;">${e.location}</span>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">${e.location}</span>
                 </div>
                 <div class="event-date">${e.date}</div>
             </div>
@@ -261,7 +340,7 @@
                             ${p.isMulti ? '🌈 Multi-Color' : '✨ Single Color'}
                         </span>
                         <h3>${p.name}</h3>
-                        <p style="color: #64748b; font-size: 0.9rem; margin: 0;">Category: ${p.type}</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Category: ${p.type}</p>
                     </div>
                     <div>
                         <span class="price-notice">Pricing varies by event & size</span>
