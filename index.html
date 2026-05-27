@@ -257,7 +257,7 @@
         </div>
 
         <div style="text-align: center; margin-bottom: 20px;">
-            <p><strong>Official Hive Authorized Seller</strong></p>
+            <p><strong>Hive Authorized Seller</strong></p>
             <div class="machine-list">
                 <span class="machine-tag">🚀 Flashforge AD5X</span>
                 <span class="machine-tag">🌈 Multi-Color Capacity</span>
@@ -308,10 +308,11 @@
 
         // --- EASY TO EDIT PRODUCTS ---
         const products = [
-            { name: "Infinity Cube", type: "Fidget", isMulti: true },
-            { name: "Articulated Dragon", type: "Decor", isMulti: true },
-            { name: "Mechanical Switch Keychain", type: "Tech", isMulti: false },
-            { name: "Low-Poly Planter", type: "Home", isMulti: false }
+            { name: "Infinity Cube", type: "Fidget", isSilk: true },
+            { name: "Articulated Dragon", type: "Decor", isSilk: true },
+            { name: "Fidget Grabber", type: "Fidget", isSilk: true },
+            { name: "Mechanical Switch Keychain", type: "Tech", isSilk: true },
+
         ];
 
         // --- RENDER LOGIC ---
@@ -336,8 +337,8 @@
             grid.innerHTML = products.map(p => `
                 <div class="product-card">
                     <div>
-                        <span class="badge ${p.isMulti ? 'multi-color-badge' : ''}">
-                            ${p.isMulti ? '🌈 Multi-Color' : '✨ Single Color'}
+                        <span class="badge ${p.isSilk ? 'multi-color-badge' : ''}">
+                            ${p.isSilk ? '🌈 PLA Slik' : '✨ Single Color'}
                         </span>
                         <h3>${p.name}</h3>
                         <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Category: ${p.type}</p>
